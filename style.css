@@ -4,6 +4,87 @@
     padding: 0;
 }
 
+/* LIGHT THEME */
+/* LIGHT THEME */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #222222;
+    --section-bg: #ffffff;
+    --card-bg: #f4f8fc;
+    --navbar-bg: #ffffff;
+    --navbar-text: #063875;
+    --heading-color: #0d6efd;
+    --border-color: #dddddd;
+    --description-color: #555555;
+
+    /* Logo */
+    --logo-bg: #ffffff;
+    --logo-border: #dddddd;
+}
+
+/* DARK THEME */
+html[data-theme="dark"] {
+    --bg-color: #121a2b;
+    --text-color: #f1f5f9;
+    --section-bg: #172235;
+    --card-bg: #1e293b;
+    --navbar-bg: #0b1220;
+    --navbar-text: #ffffff;
+    --heading-color: #36a9f5;
+    --border-color: #334155;
+    --description-color: #cbd5e1;
+
+    /* Logo */
+    --logo-bg: #1e293b;
+    --logo-border: #36a9f5;
+}
+
+/* Apply Theme */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Sections */
+section {
+    background-color: var(--section-bg);
+    color: var(--text-color);
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+/* Headings and Paragraphs */
+h1,
+h2,
+h3,
+p {
+    color: var(--text-color);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: #ffffff;
+    color: #052c65;
+    border: 2px solid #36a9f5;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    background: #dcefff;
+    transform: scale(1.08);
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -14,7 +95,8 @@ body {
     line-height: 1.7;
 }
 
-.header {
+
+/* .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,13 +105,46 @@ body {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     flex-wrap: wrap;
     gap: 15px;
+} */
+/* FIXED NAVBAR */
+.header {
+    width: 100%;
+    padding: 10px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    /* border-bottom: none !important;
+    box-shadow: none !important; */
 }
 
-.logo {
+/* .logo {
     color: #0d6efd;
     font-size: 25px;
     font-weight: bold;
     text-decoration: none;
+} */
+
+body {
+    padding-top: 90px;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+section {
+    scroll-margin-top: 100px;
 }
 
 nav {
@@ -52,7 +167,8 @@ nav a:hover {
     text-align: center;
     padding: 100px 20px;
     color: white;
-    background: linear-gradient(135deg, #0d6efd, #073b91);
+    /* background: linear-gradient(135deg, #0d6efd, #073b91); */
+    background: var(--section-bg);
 }
 
 .hero h1 {
@@ -84,8 +200,10 @@ nav a:hover {
 }
 
 .hero .btn {
-    background: white;
-    color: #0d6efd;
+    /* background: white; */
+    /* color: #0d6efd; */
+    background: #0d6efd;
+    color: white;
 }
 
 .btn-outline {
@@ -181,4 +299,285 @@ footer {
     .section h2 {
         font-size: 29px;
     }
+}
+
+
+
+
+Header .header {
+    width: 100%;
+    padding: 10px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    /* background: linear-gradient(90deg, #052c65, #087bd5, #36a9f5);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2); */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* LOGO - BOTH THEMES */
+.header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    padding: 0;
+    box-shadow: none !important;
+    transition: 0.3s ease;
+}
+
+/* LOGO IMAGE */
+.header .logo img {
+    width: 280px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    background: transparent;
+    filter: none;
+}
+
+/* DARK THEME LOGO */
+html[data-theme="dark"] .header .logo {
+    background: transparent !important;
+}
+
+html[data-theme="dark"] .header .logo img {
+    filter: brightness(1.15) contrast(1.05);
+}
+
+/* Navigation */
+.header nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header nav a {
+    /* color: #ffffff; */
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.header nav a:hover {
+    color: #c8eaff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 12px;
+    }
+
+    .logo img {
+        width: 240px;
+    }
+
+    .header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .header nav a {
+        font-size: 14px;
+    }
+
+    .header .logo img {
+        width: 230px;
+
+    }
+}
+
+
+
+/* =================================
+   LIGHT THEME (DEFAULT)
+================================= */
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #222222;
+    --section-bg: #ffffff;
+    --card-bg: #f4f8fc;
+    --navbar-bg: #ffffff;
+    --navbar-text: #063875;
+    --heading-color: #0d6efd;
+    --border-color: #dddddd;
+    --description-color: #555555;
+}
+
+/* =================================
+   DARK THEME
+================================= */
+
+html[data-theme="dark"] {
+    --bg-color: #121a2b;
+    --text-color: #f1f5f9;
+    --section-bg: #172235;
+    --card-bg: #1e293b;
+    --navbar-bg: #0b1220;
+    --navbar-text: #ffffff;
+    --heading-color: #36a9f5;
+    --border-color: #334155;
+    --description-color: #cbd5e1;
+}
+
+/* =================================
+   GLOBAL THEME
+================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Header / Navbar */
+
+.header {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text);
+    border-bottom: 2px solid var(--border-color);
+    transition: background-color 0.3s;
+    /* border-bottom: none !important;
+    box-shadow: none !important; */
+}
+
+.header nav a {
+    color: var(--navbar-text) !important;
+}
+
+.header nav a:hover {
+    color: var(--heading-color) !important;
+}
+
+/* Logo */
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    background-color: var(--logo-bg);
+    border: 1px solid var(--logo-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.logo img {
+    width: 300px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* Home / Hero Section */
+
+.hero,
+.home {
+    background-color: var(--section-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.hero h1,
+.hero h2,
+.home h1,
+.home h2,
+.home h3 {
+    color: var(--heading-color);
+}
+
+.hero p,
+.home p {
+    color: var(--description-color);
+}
+
+/* Other Sections */
+
+.section {
+    background-color: var(--section-bg);
+    color: var(--text-color);
+}
+
+.section h2,
+.section h3 {
+    color: var(--heading-color);
+}
+
+.section p {
+    color: var(--description-color);
+}
+
+/* Light background sections */
+
+.light {
+    background-color: var(--card-bg);
+}
+
+/* Cards */
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.card h3 {
+    color: var(--heading-color);
+}
+
+.card p {
+    color: var(--description-color);
+}
+
+/* Other text */
+
+.note {
+    color: var(--description-color);
+}
+
+/* Footer */
+
+footer {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+}
+
+/* Theme Toggle Button */
+
+.theme-toggle {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 2px solid var(--heading-color);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+}
+
+/* Theme transition */
+
+.header,
+section,
+.card,
+footer {
+    transition: background-color 0.3s, color 0.3s;
 }
