@@ -815,3 +815,382 @@ footer {
     background: #263449;
     color: white;
 }
+
+
+/* =========================================
+   FINAL FIXES - KRUSHIL WEB SERVICES
+   Keep these rules at the END of style.css
+========================================= */
+
+/* Ensure the fixed navbar follows the selected theme. */
+html[data-theme="light"] .header,
+html:not([data-theme]) .header {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text) !important;
+}
+
+html[data-theme="dark"] .header {
+    background-color: var(--navbar-bg) !important;
+    color: var(--navbar-text) !important;
+}
+
+.header nav a {
+    color: var(--navbar-text) !important;
+}
+
+.header nav a:hover {
+    color: var(--heading-color) !important;
+}
+
+/* Keep the home / hero area and page sections theme-aware. */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.hero,
+.home,
+section,
+.section {
+    background-color: var(--section-bg);
+    color: var(--text-color);
+}
+
+.hero h1,
+.hero h2,
+.home h1,
+.home h2,
+.home h3,
+.section h2,
+.section h3 {
+    color: var(--heading-color);
+}
+
+.hero p,
+.home p,
+.section p {
+    color: var(--description-color);
+}
+
+.light {
+    background-color: var(--card-bg);
+}
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.card p,
+.note {
+    color: var(--description-color);
+}
+
+/* Search field in both themes. */
+.navbar-search {
+    background-color: var(--card-bg);
+    border-color: var(--heading-color);
+}
+
+.navbar-search input {
+    color: var(--text-color);
+}
+
+.navbar-search input::placeholder {
+    color: var(--description-color);
+}
+
+/* Profile icon visibility in both themes. */
+.profile-btn {
+    color: var(--heading-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.profile-btn:hover {
+    color: var(--navbar-text);
+}
+
+/* Popup should appear above the fixed navbar and page content. */
+.auth-overlay {
+    z-index: 99999;
+}
+
+.auth-modal {
+    max-height: calc(100vh - 30px);
+    overflow-y: auto;
+}
+
+body.auth-open {
+    overflow: hidden;
+}
+
+.auth-form button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Keep the navbar controls usable on smaller screens. */
+@media (max-width: 768px) {
+    .header {
+        position: fixed;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 12px;
+    }
+
+    .header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 14px;
+    }
+
+    .navbar-search {
+        max-width: 100%;
+    }
+
+    .auth-modal {
+        padding: 24px 18px;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE LAYOUT FIXES – desktop, tablet and mobile
+   Keep these rules at the END of style.css.
+===================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+img,
+video,
+iframe,
+svg {
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+.cards {
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.card,
+.section,
+.hero,
+.auth-modal {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Tablet and smaller laptops */
+@media (max-width: 1024px) {
+    .header {
+        padding-left: 3%;
+        padding-right: 3%;
+        gap: 12px;
+    }
+
+    .header .logo img,
+    .logo img {
+        width: clamp(150px, 22vw, 230px);
+    }
+
+    .header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 16px;
+    }
+
+    .header nav a {
+        font-size: 15px;
+    }
+
+    .navbar-search input {
+        width: clamp(90px, 14vw, 140px);
+    }
+}
+
+/* Phones and portrait tablets */
+@media (max-width: 768px) {
+    body {
+        padding-top: 0;
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        left: auto;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px 12px;
+        padding: 10px 12px;
+    }
+
+    .header .logo,
+    .header .logo img,
+    .logo img {
+        max-width: min(100%, 190px);
+        width: auto;
+    }
+
+    .header nav {
+        order: 3;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 14px;
+    }
+
+    .header nav a {
+        font-size: 14px;
+        padding: 4px 2px;
+    }
+
+    .navbar-search {
+        flex: 1 1 150px;
+        max-width: 230px;
+        min-width: 0;
+    }
+
+    .navbar-search input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .theme-toggle,
+    .profile-btn {
+        flex: 0 0 auto;
+    }
+
+    .hero {
+        padding: 55px 18px;
+    }
+
+    .hero h1 {
+        font-size: clamp(28px, 7vw, 38px);
+    }
+
+    .hero p,
+    .section > p {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .section {
+        padding: 45px 18px;
+    }
+
+    .section h2 {
+        font-size: clamp(25px, 6vw, 32px);
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        gap: 16px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .auth-modal {
+        width: min(100%, 420px);
+        max-height: calc(100dvh - 24px);
+        padding: 25px 18px;
+        overflow-y: auto;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .header {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    .header .logo img,
+    .logo img {
+        max-width: 145px;
+    }
+
+    .header nav {
+        gap: 6px 10px;
+    }
+
+    .header nav a {
+        font-size: 12px;
+    }
+
+    .navbar-search {
+        flex-basis: 125px;
+    }
+
+    .navbar-search input {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .navbar-search button {
+        padding: 8px 10px;
+    }
+
+    .hero {
+        padding: 42px 14px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p,
+    .section p {
+        font-size: 14px;
+    }
+
+    .section {
+        padding: 36px 14px;
+    }
+
+    .section h2 {
+        font-size: 25px;
+    }
+
+    .cards {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .btn {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .auth-modal {
+        padding: 22px 15px;
+    }
+}
