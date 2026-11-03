@@ -42,3 +42,28 @@ if (themeToggle) {
     });
 }
 
+document.getElementById("navbar-search").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const searchText = document.getElementById("search-input")
+        .value.trim().toLowerCase();
+
+    const sections = document.querySelectorAll("section");
+
+    let found = false;
+
+    sections.forEach(function (section) {
+        const content = section.innerText.toLowerCase();
+
+        if (!found && content.includes(searchText) && searchText !== "") {
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+            found = true;
+        }
+    });
+
+    if (!found && searchText !== "") {
+        alert("No matching content found!");
+    }
+});

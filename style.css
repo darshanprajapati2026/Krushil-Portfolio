@@ -581,3 +581,105 @@ section,
 footer {
     transition: background-color 0.3s, color 0.3s;
 }
+
+
+/* Navbar Search Box */
+.navbar-search {
+    display: flex;
+    align-items: center;
+    border: 1px solid #087bd5;
+    border-radius: 25px;
+    overflow: hidden;
+    background: white;
+}
+
+.navbar-search input {
+    width: 150px;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: #222;
+}
+
+.navbar-search button {
+    padding: 9px 12px;
+    border: none;
+    background: #087bd5;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.navbar-search button:hover {
+    background: #005da8;
+}
+
+/* Dark Theme */
+[data-theme="dark"] .navbar-search {
+    background: #1e293b;
+    border-color: #36a9f5;
+}
+
+[data-theme="dark"] .navbar-search input {
+    color: white;
+}
+
+[data-theme="dark"] .navbar-search input::placeholder {
+    color: #cbd5e1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .navbar-search input {
+        width: 100px;
+    }
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-buttons a {
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.login-btn {
+    color: #087bd5;
+    border: 1px solid #087bd5;
+    background: transparent;
+}
+
+.register-btn {
+    color: white;
+    background: #087bd5;
+    border: 1px solid #087bd5;
+}
+
+.login-btn:hover {
+    background: #087bd5;
+    color: white;
+}
+
+.register-btn:hover {
+    background: #005da8;
+}
+
+/* Dark theme */
+[data-theme="dark"] .login-btn {
+    color: #36a9f5;
+    border-color: #36a9f5;
+}
+
+[data-theme="dark"] .register-btn {
+    background: #087bd5;
+    color: white;
+}
