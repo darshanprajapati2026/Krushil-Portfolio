@@ -1097,7 +1097,7 @@ img {
     }
 
     .hero p,
-    .section > p {
+    .section>p {
         width: 100%;
         max-width: 100%;
     }
@@ -1193,4 +1193,50 @@ img {
     .auth-modal {
         padding: 22px 15px;
     }
+}
+
+/* Profile Menu */
+.profile-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    min-width: 180px;
+    padding: 15px;
+    background: var(--card-bg, #ffffff);
+    color: var(--text-color, #222222);
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.profile-menu p {
+    margin: 0 0 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.profile-menu button {
+    width: 100%;
+    padding: 9px;
+    border: none;
+    border-radius: 6px;
+    background: #e74c3c;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.profile-menu button:hover {
+    background: #c0392b;
+}
+
+#login-message {
+    margin: 10px 0;
+    font-size: 14px;
 }
