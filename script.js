@@ -360,100 +360,159 @@ document.addEventListener("DOMContentLoaded", function () {
     // 12. REGISTER API CONNECTION
     // =====================================
     if (registerForm) {
-
         registerForm.addEventListener("submit", async function (e) {
-
             e.preventDefault();
 
-            const name =
-                document.getElementById("register-name").value.trim();
-
-            const email =
-                document.getElementById("register-email").value.trim();
-
-            const password =
-                document.getElementById("register-password").value;
-
-            const confirmPassword =
-                document.getElementById("confirm-password").value;
-
-            const message =
-                document.getElementById("register-message");
-
-            if (!name || !email || !password || !confirmPassword) {
-
-                if (message) {
-                    message.textContent = "Please fill in all fields.";
-                }
-
-                return;
-            }
+            const name = document.getElementById("register-name").value.trim();
+            const email = document.getElementById("register-email").value.trim();
+            const password = document.getElementById("register-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const message = document.getElementById("register-message");
 
             if (password !== confirmPassword) {
-
-                if (message) {
-                    message.textContent = "Passwords do not match!";
-                }
-
+                message.textContent = "Passwords do not match.";
                 return;
             }
 
             if (password.length < 8) {
-
-                if (message) {
-                    message.textContent =
-                        "Password must contain at least 8 characters.";
-                }
-
+                message.textContent = "Password must contain at least 8 characters.";
                 return;
             }
 
-            if (message) {
-                message.textContent = "Registering...";
-            }
+            message.textContent = "Registering...";
 
             try {
-
                 const response = await fetch(
-                    `${API_URL}/api/auth/register`,
+                    "https://krushil-auth-system-1.onrender.com/api/auth/register",
                     {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            name: name,
-                            email: email,
-                            password: password
+                            name,
+                            email,
+                            password
                         })
                     }
                 );
 
                 const data = await response.json();
 
-                if (message) {
-                    message.textContent =
-                        data.message ||
-                        (response.ok
-                            ? "Registration successful!"
-                            : "Registration failed.");
+                if (!response.ok) {
+                    message.textContent = data.message || "Registration failed.";
+                    return;
                 }
 
-                if (response.ok) {
-                    registerForm.reset();
-                }
+                message.textContent = "Registration successful! Please login.";
+                registerForm.reset();
 
             } catch (error) {
-
                 console.error("Registration Error:", error);
 
-                if (message) {
-                    message.textContent =
-                        "Unable to connect to server. Please try again.";
-                }
+                message.textContent =
+                    "Cannot connect to backend. Check Render service and CORS settings.";
             }
         });
     }
+
+
+
+    // if (registerForm) {
+
+    //     registerForm.addEventListener("submit", async function (e) {
+
+    //         e.preventDefault();
+
+    //         const name =
+    //             document.getElementById("register-name").value.trim();
+
+    //         const email =
+    //             document.getElementById("register-email").value.trim();
+
+    //         const password =
+    //             document.getElementById("register-password").value;
+
+    //         const confirmPassword =
+    //             document.getElementById("confirm-password").value;
+
+    //         const message =
+    //             document.getElementById("register-message");
+
+    //         if (!name || !email || !password || !confirmPassword) {
+
+    //             if (message) {
+    //                 message.textContent = "Please fill in all fields.";
+    //             }
+
+    //             return;
+    //         }
+
+    //         if (password !== confirmPassword) {
+
+    //             if (message) {
+    //                 message.textContent = "Passwords do not match!";
+    //             }
+
+    //             return;
+    //         }
+
+    //         if (password.length < 8) {
+
+    //             if (message) {
+    //                 message.textContent =
+    //                     "Password must contain at least 8 characters.";
+    //             }
+
+    //             return;
+    //         }
+
+    //         if (message) {
+    //             message.textContent = "Registering...";
+    //         }
+
+    //         try {
+
+    //             const response = await fetch(
+    //                 `${API_URL}/api/auth/register`,
+    //                 {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "Content-Type": "application/json"
+    //                     },
+    //                     body: JSON.stringify({
+    //                         name: name,
+    //                         email: email,
+    //                         password: password
+    //                     })
+    //                 }
+    //             );
+
+    //             const data = await response.json();
+
+    //             if (message) {
+    //                 message.textContent =
+    //                     data.message ||
+    //                     (response.ok
+    //                         ? "Registration successful!"
+    //                         : "Registration failed.");
+    //             }
+
+    //             if (response.ok) {
+    //                 registerForm.reset();
+    //             }
+
+    //         } catch (error) {
+
+    //             console.error("Registration Error:", error);
+
+    //             if (message) {
+    //                 message.textContent =
+    //                     "Unable to connect to server. Please try again.";
+    //             }
+    //         }
+    //     });
+    // }
 
 
     // =====================================
