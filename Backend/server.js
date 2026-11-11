@@ -8,15 +8,18 @@ const cors = require("cors");
 const app = express();
 
 // Middleware
-app.use(cors());
-// app.use(cors({
-//     origin: [
-//         "https://krushilwebservices.in",
-//         "https://www.krushilwebservices.in"
-//     ],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type", "Authorization"]
-// }));
+// // CORS configuration
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error("CORS access denied"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 
 // Authentication routes
