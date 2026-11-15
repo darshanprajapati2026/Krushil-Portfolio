@@ -5,11 +5,22 @@ require("dotenv").config();
 
 const app = express();
 
+
+const allowedOrigins = [
+    "https://krushilwebservices.in",
+    "https://www.krushilwebservices.in",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+];
+
 app.use(cors({
-    origin: [
-        "https://krushilwebservices.in",
-        "https://www.krushilwebservices.in"
-    ],
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error("CORS access denied"));
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
