@@ -6,9 +6,12 @@ require("dotenv").config();
 const app = express();
 
 
+
 const allowedOrigins = [
     "https://krushilwebservices.in",
-    "https://www.krushilwebservices.in"
+    "https://www.krushilwebservices.in",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
 ];
 
 app.use(cors({
@@ -16,6 +19,7 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 
 app.use(express.json());
