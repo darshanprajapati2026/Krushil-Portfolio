@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // =====================================
     // 1. BACKEND API URL
     // =====================================
-    const API_URL = "https://krushil-auth-system-1.onrender.com";
+    // const API_URL = "https://krushil-auth-system-1.onrender.com";
 
 
     // =====================================
