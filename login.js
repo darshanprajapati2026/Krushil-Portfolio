@@ -1,6 +1,6 @@
 const API_URL = "https://krushil-auth-system-1.onrender.com";
 
-const response = await fetch(`${API_URL}/api/auth/login`, {
+fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -9,8 +9,11 @@ const response = await fetch(`${API_URL}/api/auth/login`, {
         email: email,
         password: password
     })
-});
-
-const data = await response.json();
-
-console.log(data);
+})
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error("Login Error:", error);
+    });

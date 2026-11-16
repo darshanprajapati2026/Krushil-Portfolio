@@ -1,3 +1,4 @@
+const API_URL = "https://krushil-auth-system-1.onrender.com";
 
 document.addEventListener("DOMContentLoaded", function () {
 
