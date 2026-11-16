@@ -8,27 +8,21 @@ const app = express();
 
 const allowedOrigins = [
     "https://krushilwebservices.in",
-    "https://www.krushilwebservices.in",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "https://www.krushilwebservices.in"
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-
-        return callback(new Error("CORS access denied"));
-    },
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 app.use(express.json());
 
 // Authentication routes
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
 
 app.get("/", (req, res) => {
     res.send("KRUSHIL Backend is running");
