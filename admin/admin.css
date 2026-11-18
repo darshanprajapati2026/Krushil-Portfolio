@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    color: #333;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+/* LOGIN PAGE */
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 35px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
+}
+
+.login-container h1 {
+    text-align: center;
+    color: #174a7e;
+    margin-bottom: 15px;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-container>p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+#loginBtn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 22px;
+    background: #174a7e;
+    color: white;
+}
+
+#loginBtn:hover {
+    background: #10375e;
+}
+
+#loginBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#loginMessage {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* DASHBOARD PAGE */
+
+.dashboard-container {
+    max-width: 950px;
+    margin: 20px auto;
+}
+
+.dashboard-header {
+    background: #174a7e;
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.dashboard-header h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.logout-btn {
+    background: white;
+    color: #174a7e;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.dashboard-content {
+    margin-top: 30px;
+}
+
+.dashboard-content h2 {
+    margin-bottom: 20px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-card h3 {
+    color: #174a7e;
+    margin-bottom: 18px;
+}
+
+.dashboard-card p {
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #174a7e;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .login-container {
+        margin: 25px auto;
+        padding: 25px;
+    }
+}
