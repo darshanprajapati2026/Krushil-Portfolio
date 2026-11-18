@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Krushil Web Services</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div>
+                <h1>KRUSHIL WEB SERVICES</h1>
+                <p>Admin Dashboard</p>
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">Logout</button>
+        </header>
+
+        <main class="dashboard-content">
+            <h2 id="welcomeMessage">Welcome, Admin</h2>
+
+            <div class="dashboard-card">
+                <h3>Admin Profile</h3>
+
+                <p><strong>Name:</strong> <span id="adminName">Loading...</span></p>
+                <p><strong>Email:</strong> <span id="adminEmail">Loading...</span></p>
+                <p><strong>Role:</strong> <span id="adminRole">Loading...</span></p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Backend Connection</h3>
+                <p id="backendStatus">Checking connection...</p>
+            </div>
+        </main>
+
+        <a href="../index.html" class="back-link">Back to Website</a>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
