@@ -1,4 +1,5 @@
-
+// Import User Model
+const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
 
@@ -8,8 +9,6 @@ const {
     adminOnly
 } = require("../middleware/authMiddleware");
 
-// Import User Model
-const User = require("../models/User");
 
 // ADMIN DASHBOARD API
 router.get(
@@ -31,6 +30,34 @@ router.get(
 );
 
 // CUSTOMER MANAGEMENT API
+// router.get(
+//     "/customers",
+//     protect,
+//     adminOnly,
+//     async (req, res) => {
+//         try {
+//             const customers = await User.find({ role: "customer" })
+//                 .select("-password")
+//                 .sort({ createdAt: -1 });
+
+//             res.status(200).json({
+//                 success: true,
+//                 totalCustomers: customers.length,
+//                 customers: customers
+//             });
+
+//         } catch (error) {
+//             res.status(500).json({
+//                 success: false,
+//                 message: "Unable to fetch customers.",
+//                 error: error.message
+//             });
+//         }
+//     }
+// );
+
+
+// CUSTOMER MANAGEMENT API
 router.get(
     "/customers",
     protect,
@@ -50,8 +77,7 @@ router.get(
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Unable to fetch customers.",
-                error: error.message
+                message: "Unable to fetch customers."
             });
         }
     }
