@@ -163,3 +163,56 @@ button {
         padding: 25px;
     }
 }
+
+/* CUSTOMER MANAGEMENT TABLE */
+
+.customer-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #ffffff;
+    font-size: 14px;
+    color: #333333;
+}
+
+.customer-table th,
+.customer-table td {
+    padding: 12px 10px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #eeeeee;
+    font-weight: 400;
+}
+
+.customer-table th {
+    background: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+}
+
+.customer-table th:nth-child(1),
+.customer-table td:nth-child(1) {
+    width: 13%;
+}
+
+.customer-table th:nth-child(2),
+.customer-table td:nth-child(2) {
+    width: 22%;
+}
+
+.customer-table th:nth-child(3),
+.customer-table td:nth-child(3) {
+    width: 39%;
+}
+
+.customer-table th:nth-child(4),
+.customer-table td:nth-child(4) {
+    width: 26%;
+}
