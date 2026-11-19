@@ -129,4 +129,51 @@ router.delete(
     }
 );
 
+// EDIT CUSTOMER API
+router.put(
+    "/customers/:id",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+            const { name, email } = req.body;
+
+            const customer = await User.findOneAndUpdate(
+                {
+                    _id: req.params.id,
+                    role: "customer"
+                },
+                {
+                    name,
+                    email
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            );
+
+            if (!customer) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Customer not found"
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Customer updated successfully",
+                customer
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Server error",
+                error: error.message
+            });
+        }
+    }
+);
+
 module.exports = router;
