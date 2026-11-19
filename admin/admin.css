@@ -216,3 +216,60 @@ button {
 .customer-table td:nth-child(4) {
     width: 26%;
 }
+
+/* CUSTOMER MANAGEMENT - IMPROVED TABLE */
+
+.customer-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.dashboard-card table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 550px;
+    background: #ffffff;
+}
+
+.dashboard-card table th {
+    background: #174a7e;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.dashboard-card table th,
+.dashboard-card table td {
+    padding: 13px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+}
+
+.dashboard-card table tr:hover {
+    background: #f4f6f9;
+}
+
+/* ACTION BUTTONS */
+
+.edit-btn {
+    background: #198754;
+    color: white;
+    padding: 8px 12px;
+    margin: 3px;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    margin: 3px;
+}
+
+.edit-btn:hover {
+    background: #146c43;
+}
+
+.delete-btn:hover {
+    background: #bb2d3b;
+}
