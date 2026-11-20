@@ -79,6 +79,14 @@ exports.loginUser = async (req, res) => {
             email: email.toLowerCase().trim()
         });
 
+        // CHECK ACCOUNT STATUS
+        if (user && user.status === "inactive") {
+            return res.status(403).json({
+                success: false,
+                message: "Your account is inactive. Please contact Admin."
+            });
+        }
+
         if (!user) {
             return res.status(401).json({
                 success: false,
