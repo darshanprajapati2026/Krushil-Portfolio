@@ -252,6 +252,13 @@ button {
 
 /* ACTION BUTTONS */
 
+.view-btn {
+    background: #5596a9;
+    color: white;
+    padding: 8px 12px;
+    margin: 3px;
+}
+
 .edit-btn {
     background: #198754;
     color: white;
@@ -264,6 +271,10 @@ button {
     color: white;
     padding: 8px 12px;
     margin: 3px;
+}
+
+.view-btn:hover {
+    background: #40a0c5;
 }
 
 .edit-btn:hover {

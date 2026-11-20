@@ -221,6 +221,27 @@ function displayCustomers(customers, token) {
 
         const actionCell = document.createElement("td");
 
+        // VIEW BUTTON
+        const viewButton = document.createElement("button");
+
+        viewButton.textContent = "View";
+        viewButton.className = "view-btn";
+        viewButton.dataset.id = customer._id;
+
+        // VIEW CUSTOMER DETAILS
+        viewButton.addEventListener("click", function () {
+
+            alert(
+                "Customer Details\n\n" +
+                "Name: " + customer.name + "\n" +
+                "Email: " + customer.email + "\n" +
+                "Role: " + customer.role + "\n" +
+                "Registration Date: " +
+                new Date(customer.createdAt).toLocaleDateString()
+            );
+
+        });
+
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
         editButton.className = "edit-btn";
@@ -317,6 +338,7 @@ function displayCustomers(customers, token) {
 
         });
 
+        actionCell.appendChild(viewButton);
         actionCell.appendChild(editButton);
         actionCell.appendChild(deleteButton);
 
