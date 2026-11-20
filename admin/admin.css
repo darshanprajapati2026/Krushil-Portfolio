@@ -338,3 +338,33 @@ button {
     background-color: #f8d7da;
     color: #b02a37;
 }
+
+/* ACTIVATE / DEACTIVATE BUTTONS */
+
+.activate-btn {
+    background-color: #198754;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.deactivate-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.activate-btn:hover {
+    background-color: #146c43;
+}
+
+.deactivate-btn:hover {
+    background-color: #bb2d3b;
+}
