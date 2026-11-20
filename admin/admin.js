@@ -159,133 +159,172 @@ async function loadCustomers(token) {
 
         customerTableBody.innerHTML = "";
 
+        // DISPLAY TOTAL CUSTOMERS
+        document.getElementById("totalCustomers").textContent =
+            data.totalCustomers;
+
+        // DISPLAY ALL CUSTOMERS INITIALLY
+        displayCustomers(data.customers, token);
+
         if (data.customers.length === 0) {
             customerTableBody.textContent = "No customers found.";
             return;
         }
 
-        data.customers.forEach(customer => {
+        // CUSTOMER SEARCH
+        const searchInput = document.getElementById("customerSearch");
 
-            const row = document.createElement("tr");
+        searchInput.addEventListener("input", function () {
 
-            const nameCell = document.createElement("td");
-            nameCell.textContent = customer.name || "N/A";
+            const searchText = searchInput.value.toLowerCase();
 
-            const emailCell = document.createElement("td");
-            emailCell.textContent = customer.email || "N/A";
+            const filteredCustomers = data.customers.filter(customer =>
+                customer.name.toLowerCase().includes(searchText) ||
+                customer.email.toLowerCase().includes(searchText)
+            );
 
-            const actionCell = document.createElement("td");
-
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-            editButton.className = "edit-btn";
-            editButton.dataset.id = customer._id;
-
-
-            editButton.addEventListener("click", async function () {
-
-                const newName = prompt("Enter updated customer name:", customer.name);
-
-                if (newName === null) return;
-
-                const newEmail = prompt("Enter updated customer email:", customer.email);
-
-                if (newEmail === null) return;
-
-                if (!newName.trim() || !newEmail.trim()) {
-                    alert("Name and email are required.");
-                    return;
-                }
-
-                try {
-
-                    const response = await fetch(
-                        `${API_URL}/api/admin/customers/${customer._id}`,
-                        {
-                            method: "PUT",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": `Bearer ${token}`
-                            },
-                            body: JSON.stringify({
-                                name: newName.trim(),
-                                email: newEmail.trim()
-                            })
-                        }
-                    );
-
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.message || "Unable to update customer.");
-                    }
-
-                    alert("Customer updated successfully!");
-
-                    loadCustomers(token);
-
-                } catch (error) {
-                    alert(error.message);
-                }
-
-            });
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.className = "delete-btn";
-            deleteButton.dataset.id = customer._id;
-
-
-            deleteButton.addEventListener("click", async function () {
-
-                const confirmDelete = confirm(
-                    `Are you sure you want to delete ${customer.name}?`
-                );
-
-                if (!confirmDelete) return;
-
-                try {
-
-                    const response = await fetch(
-                        `${API_URL}/api/admin/customers/${customer._id}`,
-                        {
-                            method: "DELETE",
-                            headers: {
-                                "Authorization": `Bearer ${token}`
-                            }
-                        }
-                    );
-
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.message || "Unable to delete customer.");
-                    }
-
-                    alert("Customer deleted successfully!");
-
-                    loadCustomers(token);
-
-                } catch (error) {
-                    alert(error.message);
-                }
-
-            });
-
-            actionCell.appendChild(editButton);
-            actionCell.appendChild(deleteButton);
-
-            row.appendChild(nameCell);
-            row.appendChild(emailCell);
-            row.appendChild(actionCell);
-
-            customerTableBody.appendChild(row);
+            displayCustomers(filteredCustomers, token);
 
         });
+
 
     } catch (error) {
 
         customerTableBody.textContent = error.message;
 
     }
+}
+
+// DISPLAY CUSTOMER RECORDS
+function displayCustomers(customers, token) {
+
+    const customerTableBody =
+        document.getElementById("customerTableBody");
+
+    customerTableBody.innerHTML = "";
+
+    if (customers.length === 0) {
+        customerTableBody.innerHTML =
+            "<tr><td colspan='3'>No customers found.</td></tr>";
+        return;
+    }
+
+    customers.forEach(customer => {
+
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = customer.name || "N/A";
+
+        const emailCell = document.createElement("td");
+        emailCell.textContent = customer.email || "N/A";
+
+        const actionCell = document.createElement("td");
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.className = "edit-btn";
+        editButton.dataset.id = customer._id;
+
+
+        editButton.addEventListener("click", async function () {
+
+            const newName = prompt("Enter updated customer name:", customer.name);
+
+            if (newName === null) return;
+
+            const newEmail = prompt("Enter updated customer email:", customer.email);
+
+            if (newEmail === null) return;
+
+            if (!newName.trim() || !newEmail.trim()) {
+                alert("Name and email are required.");
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/admin/customers/${customer._id}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            name: newName.trim(),
+                            email: newEmail.trim()
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Unable to update customer.");
+                }
+
+                alert("Customer updated successfully!");
+
+                loadCustomers(token);
+
+            } catch (error) {
+                alert(error.message);
+            }
+
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-btn";
+        deleteButton.dataset.id = customer._id;
+
+
+        deleteButton.addEventListener("click", async function () {
+
+            const confirmDelete = confirm(
+                `Are you sure you want to delete ${customer.name}?`
+            );
+
+            if (!confirmDelete) return;
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/api/admin/customers/${customer._id}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Unable to delete customer.");
+                }
+
+                alert("Customer deleted successfully!");
+
+                loadCustomers(token);
+
+            } catch (error) {
+                alert(error.message);
+            }
+
+        });
+
+        actionCell.appendChild(editButton);
+        actionCell.appendChild(deleteButton);
+
+        row.appendChild(nameCell);
+        row.appendChild(emailCell);
+        row.appendChild(actionCell);
+
+        customerTableBody.appendChild(row);
+
+    });
 }
