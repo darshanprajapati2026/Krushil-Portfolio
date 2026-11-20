@@ -14,11 +14,13 @@ const allowedOrigins = [
     "http://localhost:5500"
 ];
 
+
 app.use(cors({
     origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 
 
