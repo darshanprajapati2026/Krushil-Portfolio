@@ -149,4 +149,71 @@ router.put(
     }
 );
 
+// UPDATE CUSTOMER ACCOUNT STATUS API
+router.patch(
+    "/customers/:id/status",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+
+            const mongoose = require("mongoose");
+
+            const { status } = req.body;
+
+            // VALIDATE CUSTOMER ID
+            if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid customer ID."
+                });
+            }
+
+            // VALIDATE ACCOUNT STATUS
+            if (!["active", "inactive"].includes(status)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid account status."
+                });
+            }
+
+            // UPDATE CUSTOMER STATUS
+            const customer = await User.findOneAndUpdate(
+                {
+                    _id: req.params.id,
+                    role: "customer"
+                },
+                {
+                    status: status
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            ).select("-password");
+
+            if (!customer) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Customer not found."
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Customer status updated successfully.",
+                customer: customer
+            });
+
+        } catch (error) {
+
+            res.status(500).json({
+                success: false,
+                message: "Unable to update customer status."
+            });
+
+        }
+    }
+);
+
 module.exports = router;
