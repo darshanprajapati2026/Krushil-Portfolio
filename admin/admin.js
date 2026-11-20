@@ -171,21 +171,38 @@ async function loadCustomers(token) {
             return;
         }
 
-        // CUSTOMER SEARCH
+
+        // CUSTOMER SEARCH AND STATUS FILTER
+
         const searchInput = document.getElementById("customerSearch");
+        const statusFilter = document.getElementById("statusFilter");
 
-        searchInput.addEventListener("input", function () {
+        function filterCustomers() {
 
-            const searchText = searchInput.value.toLowerCase();
+            const searchText = searchInput.value.trim().toLowerCase();
+            const selectedStatus = statusFilter.value;
 
-            const filteredCustomers = data.customers.filter(customer =>
-                customer.name.toLowerCase().includes(searchText) ||
-                customer.email.toLowerCase().includes(searchText)
-            );
+            const filteredCustomers = data.customers.filter(customer => {
+
+                const matchesSearch =
+                    (customer.name || "").toLowerCase().includes(searchText) ||
+                    (customer.email || "").toLowerCase().includes(searchText);
+
+                const customerStatus = (customer.status || "active").toLowerCase();
+
+                const matchesStatus =
+                    selectedStatus === "all" ||
+                    customerStatus === selectedStatus;
+
+                return matchesSearch && matchesStatus;
+            });
 
             displayCustomers(filteredCustomers, token);
+        }
 
-        });
+        searchInput.oninput = filterCustomers;
+        statusFilter.onchange = filterCustomers;
+
 
 
     } catch (error) {
@@ -205,7 +222,7 @@ function displayCustomers(customers, token) {
 
     if (customers.length === 0) {
         customerTableBody.innerHTML =
-            "<tr><td colspan='3'>No customers found.</td></tr>";
+            "<tr><td colspan='5'>No customers found.</td></tr>";
         return;
     }
 
@@ -218,6 +235,29 @@ function displayCustomers(customers, token) {
 
         const emailCell = document.createElement("td");
         emailCell.textContent = customer.email || "N/A";
+
+        // REGISTRATION DATE
+        const dateCell = document.createElement("td");
+
+        dateCell.textContent = customer.createdAt
+            ? new Date(customer.createdAt).toLocaleDateString()
+            : "N/A";
+
+
+        // ACCOUNT STATUS BADGE
+        const statusCell = document.createElement("td");
+
+        const status = (customer.status || "active").toLowerCase();
+
+        const statusBadge = document.createElement("span");
+
+        statusBadge.textContent =
+            status.charAt(0).toUpperCase() + status.slice(1);
+
+        statusBadge.className = `status-badge ${status}`;
+
+        statusCell.appendChild(statusBadge);
+
 
         const actionCell = document.createElement("td");
 
@@ -338,12 +378,68 @@ function displayCustomers(customers, token) {
 
         });
 
+
+        // ACTIVATE / DEACTIVATE BUTTON
+
+        const statusButton = document.createElement("button");
+
+        statusButton.textContent =
+            customer.status === "inactive" ? "Activate" : "Deactivate";
+
+        statusButton.className =
+            customer.status === "inactive" ? "activate-btn" : "deactivate-btn";
+
+        statusButton.addEventListener("click", async function () {
+
+            const newStatus =
+                customer.status === "inactive" ? "active" : "inactive";
+
+            const confirmChange = confirm(
+                `Are you sure you want to ${newStatus} this customer?`
+            );
+
+            if (!confirmChange) return;
+
+            try {
+                const response = await fetch(
+                    `${API_URL}/api/admin/customers/${customer._id}/status`,
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            status: newStatus
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Unable to change account status.");
+                }
+
+                alert(`Customer account ${newStatus} successfully!`);
+
+                loadCustomers(token);
+
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+
         actionCell.appendChild(viewButton);
         actionCell.appendChild(editButton);
         actionCell.appendChild(deleteButton);
+        actionCell.appendChild(statusButton);
 
         row.appendChild(nameCell);
         row.appendChild(emailCell);
+        row.appendChild(dateCell);
+        row.appendChild(statusCell);
         row.appendChild(actionCell);
 
         customerTableBody.appendChild(row);

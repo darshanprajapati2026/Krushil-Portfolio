@@ -284,3 +284,57 @@ button {
 .delete-btn:hover {
     background: #bb2d3b;
 }
+
+/* CUSTOMER TABLE RESPONSIVE LAYOUT */
+
+.customer-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.customer-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.customer-table th,
+.customer-table td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* ACTION BUTTONS */
+
+.customer-table td:last-child {
+    white-space: nowrap;
+}
+
+.customer-table td:last-child button {
+    display: inline-block;
+    margin: 3px;
+}
+
+/* ACCOUNT STATUS BADGES */
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status-badge.active {
+    background-color: #d1e7dd;
+    color: #146c43;
+}
+
+.status-badge.inactive {
+    background-color: #f8d7da;
+    color: #b02a37;
+}

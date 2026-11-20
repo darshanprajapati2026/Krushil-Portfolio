@@ -42,7 +42,11 @@
             <div class="dashboard-card">
                 <h3>Customer Management</h3>
                 <input type="text" id="customerSearch" placeholder="Search customers by name or email...">
-
+                <select id="statusFilter">
+                    <option value="all">All Customers</option>
+                    <option value="active">Active Customers</option>
+                    <option value="inactive">Inactive Customers</option>
+                </select>
                 <div class="customer-table-wrapper">
 
                     <table class="customer-table">
