@@ -159,9 +159,34 @@ async function loadCustomers(token) {
 
         customerTableBody.innerHTML = "";
 
-        // DISPLAY TOTAL CUSTOMERS
+
+        // DISPLAY CUSTOMER SUMMARY
+
+        const customers = data.customers;
+        // DISPLAY MONTHLY REGISTRATION CHART
+        renderRegistrationChart(customers);
+
+        const totalCustomers = customers.length;
+
+        const activeCustomers = customers.filter(
+            customer => (customer.status || "active").toLowerCase() === "active"
+        ).length;
+
+        const inactiveCustomers = customers.filter(
+            customer => (customer.status || "active").toLowerCase() === "inactive"
+        ).length;
+
+        // UPDATE SUMMARY CARDS
+
         document.getElementById("totalCustomers").textContent =
-            data.totalCustomers;
+            totalCustomers;
+
+        document.getElementById("activeCustomers").textContent =
+            activeCustomers;
+
+        document.getElementById("inactiveCustomers").textContent =
+            inactiveCustomers;
+
 
         // DISPLAY ALL CUSTOMERS INITIALLY
         displayCustomers(data.customers, token);
@@ -444,5 +469,89 @@ function displayCustomers(customers, token) {
 
         customerTableBody.appendChild(row);
 
+    });
+}
+
+let registrationChartInstance = null;
+
+// MONTHLY CUSTOMER REGISTRATION CHART
+
+function renderRegistrationChart(customers) {
+
+    const ctx = document.getElementById("registrationChart");
+
+    const today = new Date();
+
+    // Last 6 months
+    const months = [];
+
+    for (let i = 5; i >= 0; i--) {
+
+        const date = new Date(
+            today.getFullYear(),
+            today.getMonth() - i,
+            1
+        );
+
+        months.push({
+            key: `${date.getFullYear()}-${date.getMonth()}`,
+            label: date.toLocaleString("en-US", {
+                month: "short",
+                year: "numeric"
+            }),
+            count: 0
+        });
+    }
+
+    // Count customer registrations
+    customers.forEach(customer => {
+
+        if (!customer.createdAt) return;
+
+        const date = new Date(customer.createdAt);
+
+        const key = `${date.getFullYear()}-${date.getMonth()}`;
+
+        const month = months.find(item => item.key === key);
+
+        if (month) {
+            month.count++;
+        }
+    });
+
+    // Destroy previous chart before creating a new one
+    if (registrationChartInstance) {
+        registrationChartInstance.destroy();
+    }
+
+    // Create bar chart
+    registrationChartInstance = new Chart(ctx, {
+
+        type: "bar",
+
+        data: {
+            labels: months.map(month => month.label),
+
+            datasets: [{
+                label: "Customer Registrations",
+                data: months.map(month => month.count),
+                backgroundColor: "#174a7e",
+                borderRadius: 6
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
     });
 }

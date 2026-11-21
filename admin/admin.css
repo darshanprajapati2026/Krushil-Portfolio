@@ -368,3 +368,27 @@ button {
 .deactivate-btn:hover {
     background-color: #bb2d3b;
 }
+
+/* CUSTOMER SUMMARY - HORIZONTAL LAYOUT */
+
+.customer-summary {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.customer-summary .summary-card {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 600px) {
+    .customer-summary {
+        flex-direction: column;
+    }
+}

@@ -22,10 +22,40 @@
 
         <main class="dashboard-content">
             <h2 id="welcomeMessage">Welcome, Admin</h2>
-            <div class="dashboard-card">
-                <h3>Total Customers</h3>
-                <h2 id="totalCustomers">0</h2>
+            <!-- CUSTOMER SUMMARY CARDS -->
+
+            <div class="customer-summary">
+
+                <div class="dashboard-card summary-card">
+                    <h3>Total Customers</h3>
+                    <h2 id="totalCustomers">0</h2>
+                </div>
+
+                <div class="dashboard-card summary-card">
+                    <h3>Active Customers</h3>
+                    <h2 id="activeCustomers">0</h2>
+                </div>
+
+                <div class="dashboard-card summary-card">
+                    <h3>Inactive Customers</h3>
+                    <h2 id="inactiveCustomers">0</h2>
+                </div>
+
             </div>
+
+            <!-- CUSTOMER REGISTRATION ANALYTICS -->
+
+            <div class="dashboard-card analytics-card">
+
+                <h3>Monthly Customer Registrations</h3>
+
+                <div class="chart-container">
+                    <canvas id="registrationChart"></canvas>
+                </div>
+
+            </div>
+
+
 
             <div class="dashboard-card">
                 <h3>Admin Profile</h3>
@@ -74,6 +104,10 @@
         <a href="../index.html" class="back-link">Back to Website</a>
     </div>
 
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Admin JavaScript -->
     <script src="admin.js"></script>
 </body>
 
