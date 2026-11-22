@@ -252,4 +252,70 @@ router.get(
     }
 );
 
+
+// UPDATE ADMIN PROFILE API
+router.put(
+    "/profile",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+
+            const { name, email } = req.body;
+
+            // VALIDATE INPUT
+            if (!name || !email) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Name and email are required."
+                });
+            }
+
+            // UPDATE ADMIN PROFILE
+            const admin = await User.findOneAndUpdate(
+                {
+                    _id: req.user._id,
+                    role: "admin"
+                },
+                {
+                    name: name.trim(),
+                    email: email.trim().toLowerCase()
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            ).select("-password");
+
+            if (!admin) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Admin not found."
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Admin profile updated successfully.",
+                admin: admin
+            });
+
+        } catch (error) {
+
+            if (error.code === 11000) {
+                return res.status(409).json({
+                    success: false,
+                    message: "This email address is already registered."
+                });
+            }
+
+            res.status(500).json({
+                success: false,
+                message: "Unable to update admin profile."
+            });
+
+        }
+    }
+);
+
 module.exports = router;
