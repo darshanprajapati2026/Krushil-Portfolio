@@ -216,4 +216,40 @@ router.patch(
     }
 );
 
+
+// ADMIN PROFILE API
+router.get(
+    "/profile",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+
+            const admin = await User.findById(req.user._id)
+                .select("-password");
+
+            if (!admin) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Admin not found."
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Admin profile fetched successfully.",
+                admin: admin
+            });
+
+        } catch (error) {
+
+            res.status(500).json({
+                success: false,
+                message: "Unable to fetch admin profile."
+            });
+
+        }
+    }
+);
+
 module.exports = router;
