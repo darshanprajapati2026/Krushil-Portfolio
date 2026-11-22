@@ -163,8 +163,106 @@ async function loadCustomers(token) {
         // DISPLAY CUSTOMER SUMMARY
 
         const customers = data.customers;
+        // EXPORT CUSTOMERS BUTTON
+
+        document.getElementById("exportCustomersBtn").onclick = function () {
+            exportCustomers(customers);
+        };
+
+        // REGISTRATION STATISTICS
+
+        const today = new Date();
+
+        // This Month Registrations
+        const thisMonthCount = customers.filter(customer => {
+            if (!customer.createdAt) return false;
+
+            const date = new Date(customer.createdAt);
+
+            return date.getMonth() === today.getMonth() &&
+                date.getFullYear() === today.getFullYear();
+        }).length;
+
+        // Last Month Registrations
+        const lastMonthDate = new Date(
+            today.getFullYear(),
+            today.getMonth() - 1,
+            1
+        );
+
+        const lastMonthCount = customers.filter(customer => {
+            if (!customer.createdAt) return false;
+
+            const date = new Date(customer.createdAt);
+
+            return date.getMonth() === lastMonthDate.getMonth() &&
+                date.getFullYear() === lastMonthDate.getFullYear();
+        }).length;
+
+        // Growth Percentage
+        let growthText;
+
+        if (lastMonthCount === 0) {
+            growthText = thisMonthCount === 0 ? "0%" : "N/A";
+        } else {
+            const growth = (
+                (thisMonthCount - lastMonthCount) / lastMonthCount
+            ) * 100;
+
+            growthText = `${growth > 0 ? "+" : ""}${growth.toFixed(1)}%`;
+        }
+
+        // Display Statistics
+        document.getElementById("thisMonthRegistrations").textContent = thisMonthCount;
+
+        document.getElementById("lastMonthRegistrations").textContent = lastMonthCount;
+
+        document.getElementById("registrationGrowth").textContent = growthText;
+
         // DISPLAY MONTHLY REGISTRATION CHART
         renderRegistrationChart(customers);
+        // DISPLAY CUSTOMER GROWTH CHART
+        renderGrowthChart(customers);
+        renderCustomerStatusChart(customers);
+        renderRecentCustomers(customers);
+
+        // RECENT CUSTOMER REGISTRATIONS
+
+        function renderRecentCustomers(customers) {
+
+            const tableBody = document.getElementById("recentCustomersTable");
+
+            // Sort customers by registration date (newest first)
+            const recentCustomers = [...customers]
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 5);
+
+            if (recentCustomers.length === 0) {
+                tableBody.innerHTML = `
+            <tr>
+                <td colspan="3">No customer registrations found.</td>
+            </tr>
+        `;
+                return;
+            }
+
+            tableBody.innerHTML = recentCustomers.map(customer => {
+
+                const registrationDate = customer.createdAt
+                    ? new Date(customer.createdAt).toLocaleDateString("en-IN")
+                    : "N/A";
+
+                return `
+            <tr>
+                <td>${customer.name || "N/A"}</td>
+                <td>${customer.email || "N/A"}</td>
+                <td>${registrationDate}</td>
+            </tr>
+        `;
+
+            }).join("");
+        }
+
 
         const totalCustomers = customers.length;
 
@@ -555,3 +653,199 @@ function renderRegistrationChart(customers) {
         }
     });
 }
+
+
+// CUSTOMER GROWTH TREND CHART
+
+let growthChartInstance = null;
+
+function renderGrowthChart(customers) {
+
+    const ctx = document.getElementById("growthChart");
+
+    const today = new Date();
+    const months = [];
+
+    // Get the last 6 months
+    for (let i = 5; i >= 0; i--) {
+
+        const date = new Date(
+            today.getFullYear(),
+            today.getMonth() - i,
+            1
+        );
+
+        months.push({
+            key: `${date.getFullYear()}-${date.getMonth()}`,
+            label: date.toLocaleString("en-US", {
+                month: "short",
+                year: "numeric"
+            }),
+            count: 0
+        });
+    }
+
+    // Count monthly registrations
+    customers.forEach(customer => {
+
+        if (!customer.createdAt) return;
+
+        const date = new Date(customer.createdAt);
+
+        const key = `${date.getFullYear()}-${date.getMonth()}`;
+
+        const month = months.find(item => item.key === key);
+
+        if (month) {
+            month.count++;
+        }
+    });
+
+    // Remove previous chart
+    if (growthChartInstance) {
+        growthChartInstance.destroy();
+    }
+
+    // Create line chart
+    growthChartInstance = new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+            labels: months.map(month => month.label),
+
+            datasets: [{
+                label: "Customer Registrations",
+                data: months.map(month => month.count),
+                borderColor: "#198754",
+                backgroundColor: "rgba(25, 135, 84, 0.15)",
+                fill: true,
+                tension: 0.3
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+// CUSTOMER ACCOUNT STATUS DOUGHNUT CHART
+
+let customerStatusChartInstance = null;
+
+function renderCustomerStatusChart(customers) {
+
+    const ctx = document.getElementById("customerStatusChart");
+
+    const activeCount = customers.filter(customer =>
+        (customer.status || "active").toLowerCase() === "active"
+    ).length;
+
+    const inactiveCount = customers.filter(customer =>
+        (customer.status || "active").toLowerCase() === "inactive"
+    ).length;
+
+    if (customerStatusChartInstance) {
+        customerStatusChartInstance.destroy();
+    }
+
+    customerStatusChartInstance = new Chart(ctx, {
+        type: "doughnut",
+
+        data: {
+            labels: ["Active Customers", "Inactive Customers"],
+
+            datasets: [{
+                data: [activeCount, inactiveCount],
+                backgroundColor: ["#198754", "#dc3545"],
+                borderWidth: 2
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    position: "bottom"
+                }
+            }
+        }
+    });
+}
+
+
+// EXPORT CUSTOMERS TO CSV
+
+function exportCustomers(customers) {
+
+    if (!customers || customers.length === 0) {
+        alert("No customer records available to export.");
+        return;
+    }
+
+    const headers = [
+        "Customer Name",
+        "Email Address",
+        "Registration Date",
+        "Account Status"
+    ];
+
+    const rows = customers.map(customer => {
+
+        const registrationDate = customer.createdAt
+            ? new Date(customer.createdAt).toLocaleDateString("en-IN")
+            : "N/A";
+
+        return [
+            customer.name || "N/A",
+            customer.email || "N/A",
+            registrationDate,
+            customer.status || "active"
+        ];
+    });
+
+    const csvContent = [
+        headers,
+        ...rows
+    ].map(row =>
+        row.map(value =>
+            `"${String(value).replace(/"/g, '""')}"`
+        ).join(",")
+    ).join("\n");
+
+    const blob = new Blob(
+        ["\uFEFF" + csvContent],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const link = document.createElement("a");
+
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute("download", "Krushil_Customers.csv");
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+
+
+

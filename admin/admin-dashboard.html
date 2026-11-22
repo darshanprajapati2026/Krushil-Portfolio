@@ -54,6 +54,77 @@
                 </div>
 
             </div>
+            <!-- CUSTOMER GROWTH TREND -->
+
+            <div class="dashboard-card analytics-card">
+
+                <h3>Customer Growth Trend</h3>
+
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+
+            </div>
+            <!-- REGISTRATION STATISTICS -->
+
+            <div class="dashboard-card analytics-card">
+
+                <h3>Registration Statistics</h3>
+
+                <div class="customer-summary">
+
+                    <div class="dashboard-card summary-card">
+                        <h3>This Month</h3>
+                        <h2 id="thisMonthRegistrations">0</h2>
+                    </div>
+
+                    <div class="dashboard-card summary-card">
+                        <h3>Last Month</h3>
+                        <h2 id="lastMonthRegistrations">0</h2>
+                    </div>
+
+                    <div class="dashboard-card summary-card">
+                        <h3>Growth Percentage</h3>
+                        <h2 id="registrationGrowth">0%</h2>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- CUSTOMER ACCOUNT STATUS CHART -->
+            <div class="dashboard-card analytics-card">
+                <h3>Customer Account Status Overview</h3>
+
+                <div class="chart-container">
+                    <canvas id="customerStatusChart"></canvas>
+                </div>
+                <!-- RECENT CUSTOMER REGISTRATIONS -->
+                <div class="dashboard-card">
+                    <h3>Recent Customer Registrations</h3>
+
+                    <div class="customer-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Email Address</th>
+                                    <th>Registration Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="recentCustomersTable">
+                                <tr>
+                                    <td colspan="3">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+
 
 
 
@@ -77,6 +148,10 @@
                     <option value="active">Active Customers</option>
                     <option value="inactive">Inactive Customers</option>
                 </select>
+                <button id="exportCustomersBtn" class="activate-btn">
+                    <i class="fas fa-file-excel"></i>
+                    Export Customers
+                </button>
                 <div class="customer-table-wrapper">
 
                     <table class="customer-table">
