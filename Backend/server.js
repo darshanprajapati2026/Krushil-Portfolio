@@ -29,6 +29,7 @@ app.use(express.json());
 // Authentication routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/enquiries", require("./routes/enquiryRoutes"));
 
 app.get("/", (req, res) => {
     res.send("KRUSHIL Backend is running");
