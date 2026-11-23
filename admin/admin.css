@@ -438,3 +438,90 @@ button {
 .toggle-password:hover {
     color: #007bff;
 }
+
+/* ==============================
+   ADMIN SIDEBAR
+============================== */
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background: #17243a;
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 20px 15px;
+    box-sizing: border-box;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.sidebar-header p {
+    margin-top: 5px;
+    color: #bdc8d8;
+    font-size: 13px;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 12px;
+    color: #d5deeb;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.sidebar-link i {
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: #294568;
+    color: #ffffff;
+}
+
+/* ==============================
+   DASHBOARD MAIN CONTENT
+============================== */
+
+.dashboard-main {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #f4f6f9;
+}
+
+.dashboard-header {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-content {
+    width: 100%;
+    box-sizing: border-box;
+}
