@@ -36,4 +36,50 @@ router.get(
     }
 );
 
+// CREATE NEW CUSTOMER ENQUIRY
+router.post(
+    "/",
+    async (req, res) => {
+        try {
+            const {
+                name,
+                email,
+                phone,
+                subject,
+                message
+            } = req.body;
+
+            // Validate required fields
+            if (!name || !email || !phone || !message) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Please fill all required fields."
+                });
+            }
+
+            // Save enquiry in MongoDB
+            const enquiry = await Enquiry.create({
+                name,
+                email,
+                phone,
+                subject,
+                message
+            });
+
+            res.status(201).json({
+                success: true,
+                message: "Enquiry submitted successfully!",
+                enquiry
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Unable to submit enquiry."
+            });
+        }
+    }
+);
+
 module.exports = router;
+
