@@ -90,6 +90,7 @@ if (logoutBtn) {
             document.getElementById("adminRole").textContent =
                 user.role || "Not available";
 
+            loadAdminProfile(token);
             checkBackendConnection(token);
             loadCustomers(token);
 
@@ -106,6 +107,41 @@ if (logoutBtn) {
 
         window.location.href = "admin-login.html";
     });
+}
+
+
+
+// LOAD LATEST ADMIN PROFILE
+async function loadAdminProfile(token) {
+    try {
+        const response = await fetch(`${API_URL}/api/admin/profile`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to load Admin Profile.");
+        }
+
+        document.getElementById("welcomeMessage").textContent =
+            `Welcome, ${data.admin.name}`;
+
+        document.getElementById("adminName").textContent =
+            data.admin.name;
+
+        document.getElementById("adminEmail").textContent =
+            data.admin.email;
+
+        document.getElementById("adminRole").textContent =
+            data.admin.role;
+
+    } catch (error) {
+        console.error("Admin Profile Error:", error);
+    }
 }
 
 
@@ -846,6 +882,91 @@ function exportCustomers(customers) {
 
     URL.revokeObjectURL(url);
 }
+
+
+// OPEN EDIT ADMIN PROFILE FORM
+
+document.getElementById("editAdminProfileBtn").onclick = function () {
+
+    document.getElementById("editAdminName").value =
+        document.getElementById("adminName").textContent;
+
+    document.getElementById("editAdminEmail").value =
+        document.getElementById("adminEmail").textContent;
+
+    document.getElementById("editAdminProfileForm").style.display = "block";
+
+};
+
+
+// CANCEL EDIT ADMIN PROFILE
+
+document.getElementById("cancelAdminProfileBtn").onclick = function () {
+
+    document.getElementById("editAdminProfileForm").style.display = "none";
+
+    document.getElementById("adminProfileMessage").textContent = "";
+
+};
+
+
+// SAVE UPDATED ADMIN PROFILE
+
+document.getElementById("saveAdminProfileBtn").onclick = async function () {
+
+    const name = document.getElementById("editAdminName").value.trim();
+    const email = document.getElementById("editAdminEmail").value.trim();
+
+    const message = document.getElementById("adminProfileMessage");
+
+    const token = sessionStorage.getItem("authToken");
+
+    if (!name || !email) {
+        message.textContent = "Please enter Admin Name and Email.";
+        message.style.color = "red";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`${API_URL}/api/admin/profile`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to update profile.");
+        }
+
+        // UPDATE PROFILE DISPLAY
+        document.getElementById("adminName").textContent = data.admin.name;
+        document.getElementById("adminEmail").textContent = data.admin.email;
+        document.getElementById("welcomeMessage").textContent =
+            `Welcome, ${data.admin.name}`;
+
+        message.textContent = "Admin profile updated successfully!";
+        message.style.color = "green";
+
+        document.getElementById("editAdminProfileForm").style.display = "none";
+
+    } catch (error) {
+
+        message.textContent = error.message;
+        message.style.color = "red";
+
+    }
+
+};
+
 
 
 
