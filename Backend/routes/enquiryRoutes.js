@@ -136,4 +136,46 @@ router.patch(
     }
 );
 
+
+// DELETE ENQUIRY (ADMIN ONLY)
+router.delete(
+    "/:id",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            // Validate Enquiry ID
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid enquiry ID."
+                });
+            }
+
+            // Delete Enquiry
+            const enquiry = await Enquiry.findByIdAndDelete(id);
+
+            if (!enquiry) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Enquiry not found."
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Enquiry deleted successfully!"
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Unable to delete enquiry."
+            });
+        }
+    }
+);
+
 module.exports = router;
