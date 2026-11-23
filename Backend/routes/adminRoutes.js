@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 // Import authentication middleware
 const {
@@ -314,6 +315,79 @@ router.put(
                 message: "Unable to update admin profile."
             });
 
+        }
+    }
+);
+
+
+// CHANGE ADMIN PASSWORD API
+router.put(
+    "/change-password",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+            const { currentPassword, newPassword } = req.body;
+
+            // VALIDATE INPUT
+            if (!currentPassword || !newPassword) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Current password and new password are required."
+                });
+            }
+
+            // FIND ADMIN
+            const admin = await User.findOne({
+                _id: req.user._id,
+                role: "admin"
+            });
+
+            if (!admin) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Admin not found."
+                });
+            }
+
+            // VERIFY CURRENT PASSWORD
+            const isMatch = await bcrypt.compare(
+                currentPassword,
+                admin.password
+            );
+
+            if (!isMatch) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Current password is incorrect."
+                });
+            }
+
+            // VALIDATE NEW PASSWORD
+            if (newPassword.length < 8) {
+                return res.status(400).json({
+                    success: false,
+                    message: "New password must be at least 8 characters."
+                });
+            }
+
+            // HASH NEW PASSWORD
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+            // SAVE NEW PASSWORD
+            admin.password = hashedPassword;
+            await admin.save();
+
+            res.status(200).json({
+                success: true,
+                message: "Admin password changed successfully."
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Unable to change admin password."
+            });
         }
     }
 );
