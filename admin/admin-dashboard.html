@@ -145,6 +145,10 @@
                     <i class="fas fa-user-edit"></i>
                     Edit Profile
                 </button>
+                <button id="changeAdminPasswordBtn" class="activate-btn">
+                    <i class="fas fa-key"></i>
+                    Change Password
+                </button>
 
                 <p id="adminProfileMessage"></p>
             </div>
@@ -175,6 +179,48 @@
 
             </div>
 
+            <!-- CHANGE ADMIN PASSWORD FORM -->
+            <div class="dashboard-card" id="changeAdminPasswordForm" style="display: none;">
+
+                <h3>Change Admin Password</h3>
+
+                <label for="currentAdminPassword">Current Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="currentAdminPassword" placeholder="Enter Current Password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('currentAdminPassword', this)"></i>
+                </div>
+
+                <br><br>
+
+                <label for="newAdminPassword">New Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="newAdminPassword" placeholder="Enter New Password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('newAdminPassword', this)"></i>
+                </div>
+
+                <br><br>
+
+                <label for="confirmAdminPassword">Confirm New Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="confirmAdminPassword" placeholder="Confirm New Password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('confirmAdminPassword', this)"></i>
+                </div>
+
+                <br><br>
+
+                <button id="saveAdminPasswordBtn" class="activate-btn">
+                    <i class="fas fa-save"></i>
+                    Save Password
+                </button>
+
+                <button id="cancelAdminPasswordBtn" class="cancel-btn">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+
+                <p id="adminPasswordMessage"></p>
+
+            </div>
 
 
             <div class="dashboard-card">

@@ -409,3 +409,32 @@ button {
 .cancel-btn:hover {
     background-color: #b02a37;
 }
+
+/* PASSWORD INPUT WRAPPER */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* PASSWORD INPUT */
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+    box-sizing: border-box;
+}
+
+/* SHOW / HIDE PASSWORD ICON */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+}
+
+/* PASSWORD ICON HOVER */
+.toggle-password:hover {
+    color: #007bff;
+}

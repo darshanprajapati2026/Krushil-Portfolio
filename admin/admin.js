@@ -884,6 +884,102 @@ function exportCustomers(customers) {
 }
 
 
+// OPEN CHANGE ADMIN PASSWORD FORM
+document.getElementById("changeAdminPasswordBtn").onclick = function () {
+
+    document.getElementById("changeAdminPasswordForm").style.display = "block";
+
+};
+
+// CANCEL CHANGE ADMIN PASSWORD
+document.getElementById("cancelAdminPasswordBtn").onclick = function () {
+
+    document.getElementById("changeAdminPasswordForm").style.display = "none";
+
+    document.getElementById("currentAdminPassword").value = "";
+    document.getElementById("newAdminPassword").value = "";
+    document.getElementById("confirmAdminPassword").value = "";
+
+    document.getElementById("adminPasswordMessage").textContent = "";
+
+};
+
+
+// SAVE NEW ADMIN PASSWORD
+document.getElementById("saveAdminPasswordBtn").onclick = async function () {
+
+    const currentPassword =
+        document.getElementById("currentAdminPassword").value;
+
+    const newPassword =
+        document.getElementById("newAdminPassword").value;
+
+    const confirmPassword =
+        document.getElementById("confirmAdminPassword").value;
+
+    const message =
+        document.getElementById("adminPasswordMessage");
+
+    const token = sessionStorage.getItem("authToken");
+
+    // CHECK EMPTY FIELDS
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        message.textContent = "Please fill in all password fields.";
+        message.style.color = "red";
+        return;
+    }
+
+    // CHECK PASSWORD LENGTH
+    if (newPassword.length < 8) {
+        message.textContent = "New password must be at least 8 characters.";
+        message.style.color = "red";
+        return;
+    }
+
+    // CHECK PASSWORD MATCH
+    if (newPassword !== confirmPassword) {
+        message.textContent = "New Password and Confirm Password do not match.";
+        message.style.color = "red";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`${API_URL}/api/admin/change-password`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword,
+                newPassword: newPassword
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to change password.");
+        }
+
+        message.textContent = "Admin password changed successfully!";
+        message.style.color = "green";
+
+        document.getElementById("currentAdminPassword").value = "";
+        document.getElementById("newAdminPassword").value = "";
+        document.getElementById("confirmAdminPassword").value = "";
+
+    } catch (error) {
+
+        message.textContent = error.message;
+        message.style.color = "red";
+
+    }
+
+};
+
+
 // OPEN EDIT ADMIN PROFILE FORM
 
 document.getElementById("editAdminProfileBtn").onclick = function () {
@@ -966,6 +1062,29 @@ document.getElementById("saveAdminProfileBtn").onclick = async function () {
     }
 
 };
+
+
+
+// SHOW / HIDE PASSWORD
+function togglePassword(inputId, icon) {
+
+    const passwordInput = document.getElementById(inputId);
+
+    if (passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+
+    } else {
+
+        passwordInput.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+
+    }
+
+}
+
+
 
 
 
