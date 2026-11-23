@@ -1,4 +1,4 @@
-
+const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 
@@ -81,5 +81,59 @@ router.post(
     }
 );
 
-module.exports = router;
+// UPDATE ENQUIRY STATUS (ADMIN ONLY)
+router.patch(
+    "/:id/status",
+    protect,
+    adminOnly,
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { status } = req.body;
 
+            // Validate Enquiry ID
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid enquiry ID."
+                });
+            }
+
+            // Validate Status
+            if (!["new", "contacted", "completed"].includes(status)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid enquiry status."
+                });
+            }
+
+            // Update Enquiry
+            const enquiry = await Enquiry.findByIdAndUpdate(
+                id,
+                { status },
+                { new: true, runValidators: true }
+            );
+
+            if (!enquiry) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Enquiry not found."
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Enquiry status updated successfully!",
+                enquiry
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: "Unable to update enquiry status."
+            });
+        }
+    }
+);
+
+module.exports = router;
