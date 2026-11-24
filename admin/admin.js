@@ -93,6 +93,7 @@ if (logoutBtn) {
             loadAdminProfile(token);
             checkBackendConnection(token);
             loadCustomers(token);
+            loadEnquiries(token);
 
         } catch (error) {
             sessionStorage.clear();
@@ -1099,6 +1100,10 @@ sidebarLinks.forEach(link => {
         event.preventDefault();
 
         const targetSection = this.getAttribute("data-section");
+        // SHOW PASSWORD FORM WHEN PASSWORD SIDEBAR IS CLICKED
+        if (targetSection === "passwordSection") {
+            document.getElementById("changeAdminPasswordForm").style.display = "block";
+        }
 
         // Hide all sections
         adminSections.forEach(section => {
@@ -1119,6 +1124,70 @@ sidebarLinks.forEach(link => {
 
 });
 
+
+// LOAD CUSTOMER ENQUIRIES
+async function loadEnquiries(token) {
+
+    const enquiryTableBody = document.getElementById("enquiriesTable");
+
+    try {
+
+        const response = await fetch(`${API_URL}/api/enquiries`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to load enquiries.");
+        }
+
+        const enquiries = data.enquiries;
+
+        if (!enquiries || enquiries.length === 0) {
+            enquiryTableBody.innerHTML = `
+                <tr>
+                    <td colspan="8">No enquiries found.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        // DISPLAY ENQUIRIES
+        enquiryTableBody.innerHTML = enquiries.map(enquiry => {
+
+            const enquiryDate = enquiry.createdAt
+                ? new Date(enquiry.createdAt).toLocaleDateString("en-IN")
+                : "N/A";
+
+            return `
+                <tr>
+                    <td>${enquiry.name || "N/A"}</td>
+                    <td>${enquiry.email || "N/A"}</td>
+                    <td>${enquiry.phone || "N/A"}</td>
+                    <td>${enquiry.subject || "N/A"}</td>
+                    <td>${enquiry.message || "N/A"}</td>
+                    <td>${enquiryDate}</td>
+                    <td>${enquiry.status || "new"}</td>
+                    <td>Enquiry received</td>
+                </tr>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+
+        enquiryTableBody.innerHTML = `
+            <tr>
+                <td colspan="8">${error.message}</td>
+            </tr>
+        `;
+
+    }
+}
 
 
 
