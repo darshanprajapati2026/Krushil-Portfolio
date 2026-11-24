@@ -72,248 +72,268 @@
             </header>
 
             <main class="dashboard-content">
-                <h2 id="welcomeMessage">Welcome, Admin</h2>
-                <!-- CUSTOMER SUMMARY CARDS -->
-
-                <div class="customer-summary">
-
-                    <div class="dashboard-card summary-card">
-                        <h3>Total Customers</h3>
-                        <h2 id="totalCustomers">0</h2>
-                    </div>
-
-                    <div class="dashboard-card summary-card">
-                        <h3>Active Customers</h3>
-                        <h2 id="activeCustomers">0</h2>
-                    </div>
-
-                    <div class="dashboard-card summary-card">
-                        <h3>Inactive Customers</h3>
-                        <h2 id="inactiveCustomers">0</h2>
-                    </div>
-
-                </div>
-
-                <!-- CUSTOMER REGISTRATION ANALYTICS -->
-
-                <div class="dashboard-card analytics-card">
-
-                    <h3>Monthly Customer Registrations</h3>
-
-                    <div class="chart-container">
-                        <canvas id="registrationChart"></canvas>
-                    </div>
-
-                </div>
-                <!-- CUSTOMER GROWTH TREND -->
-
-                <div class="dashboard-card analytics-card">
-
-                    <h3>Customer Growth Trend</h3>
-
-                    <div class="chart-container">
-                        <canvas id="growthChart"></canvas>
-                    </div>
-
-                </div>
-                <!-- REGISTRATION STATISTICS -->
-
-                <div class="dashboard-card analytics-card">
-
-                    <h3>Registration Statistics</h3>
+                <section id="dashboardSection" class="admin-section active">
+                    <h2 id="welcomeMessage">Welcome, Admin</h2>
+                    <!-- CUSTOMER SUMMARY CARDS -->
 
                     <div class="customer-summary">
 
                         <div class="dashboard-card summary-card">
-                            <h3>This Month</h3>
-                            <h2 id="thisMonthRegistrations">0</h2>
+                            <h3>Total Customers</h3>
+                            <h2 id="totalCustomers">0</h2>
                         </div>
 
                         <div class="dashboard-card summary-card">
-                            <h3>Last Month</h3>
-                            <h2 id="lastMonthRegistrations">0</h2>
+                            <h3>Active Customers</h3>
+                            <h2 id="activeCustomers">0</h2>
                         </div>
 
                         <div class="dashboard-card summary-card">
-                            <h3>Growth Percentage</h3>
-                            <h2 id="registrationGrowth">0%</h2>
+                            <h3>Inactive Customers</h3>
+                            <h2 id="inactiveCustomers">0</h2>
                         </div>
 
                     </div>
 
-                </div>
-                <!-- CUSTOMER ACCOUNT STATUS CHART -->
-                <div class="dashboard-card analytics-card">
-                    <h3>Customer Account Status Overview</h3>
+                    <!-- CUSTOMER REGISTRATION ANALYTICS -->
 
-                    <div class="chart-container">
-                        <canvas id="customerStatusChart"></canvas>
+                    <div class="dashboard-card analytics-card">
+
+                        <h3>Monthly Customer Registrations</h3>
+
+                        <div class="chart-container">
+                            <canvas id="registrationChart"></canvas>
+                        </div>
+
                     </div>
-                    <!-- RECENT CUSTOMER REGISTRATIONS -->
+                    <!-- CUSTOMER GROWTH TREND -->
+
+                    <div class="dashboard-card analytics-card">
+
+                        <h3>Customer Growth Trend</h3>
+
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+
+                    </div>
+                    <!-- REGISTRATION STATISTICS -->
+
+                    <div class="dashboard-card analytics-card">
+
+                        <h3>Registration Statistics</h3>
+
+                        <div class="customer-summary">
+
+                            <div class="dashboard-card summary-card">
+                                <h3>This Month</h3>
+                                <h2 id="thisMonthRegistrations">0</h2>
+                            </div>
+
+                            <div class="dashboard-card summary-card">
+                                <h3>Last Month</h3>
+                                <h2 id="lastMonthRegistrations">0</h2>
+                            </div>
+
+                            <div class="dashboard-card summary-card">
+                                <h3>Growth Percentage</h3>
+                                <h2 id="registrationGrowth">0%</h2>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- CUSTOMER ACCOUNT STATUS CHART -->
+                    <div class="dashboard-card analytics-card">
+                        <h3>Customer Account Status Overview</h3>
+
+                        <div class="chart-container">
+                            <canvas id="customerStatusChart"></canvas>
+                        </div>
+                        <!-- RECENT CUSTOMER REGISTRATIONS -->
+                        <div class="dashboard-card">
+                            <h3>Recent Customer Registrations</h3>
+
+                            <div class="customer-table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <th>Email Address</th>
+                                            <th>Registration Date</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="recentCustomersTable">
+                                        <tr>
+                                            <td colspan="3">Loading...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <section id="profileSection" class="admin-section">
+                        <div class="dashboard-card">
+                            <h3>Admin Profile</h3>
+
+                            <p>
+                                <strong>Name:</strong>
+                                <span id="adminName">Loading...</span>
+                            </p>
+
+                            <p>
+                                <strong>Email:</strong>
+                                <span id="adminEmail">Loading...</span>
+                            </p>
+
+                            <p>
+                                <strong>Role:</strong>
+                                <span id="adminRole">Loading...</span>
+                            </p>
+
+                            <button id="editAdminProfileBtn" class="activate-btn">
+                                <i class="fas fa-user-edit"></i>
+                                Edit Profile
+                            </button>
+                            <button id="changeAdminPasswordBtn" class="activate-btn">
+                                <i class="fas fa-key"></i>
+                                Change Password
+                            </button>
+
+                            <p id="adminProfileMessage"></p>
+                        </div>
+                        <!-- EDIT ADMIN PROFILE FORM -->
+
+                        <div class="dashboard-card" id="editAdminProfileForm" style="display: none;">
+
+                            <h3>Edit Admin Profile</h3>
+
+                            <label for="editAdminName">Admin Name</label>
+                            <input type="text" id="editAdminName" placeholder="Enter Admin Name">
+
+                            <br><br>
+
+                            <label for="editAdminEmail">Admin Email</label>
+                            <input type="email" id="editAdminEmail" placeholder="Enter Admin Email">
+
+                            <br><br>
+
+                            <button id="saveAdminProfileBtn" class="activate-btn">
+                                Save Changes
+                            </button>
+
+                            <button id="cancelAdminProfileBtn" class="cancel-btn">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+
+                        </div>
+                    </section>
+                    <section id="passwordSection" class="admin-section">
+                        <!-- CHANGE ADMIN PASSWORD FORM -->
+                        <div class="dashboard-card" id="changeAdminPasswordForm" style="display: none;">
+
+                            <h3>Change Admin Password</h3>
+
+                            <label for="currentAdminPassword">Current Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="currentAdminPassword" placeholder="Enter Current Password">
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('currentAdminPassword', this)"></i>
+                            </div>
+
+                            <br><br>
+
+                            <label for="newAdminPassword">New Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="newAdminPassword" placeholder="Enter New Password">
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('newAdminPassword', this)"></i>
+                            </div>
+
+                            <br><br>
+
+                            <label for="confirmAdminPassword">Confirm New Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="confirmAdminPassword" placeholder="Confirm New Password">
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('confirmAdminPassword', this)"></i>
+                            </div>
+
+                            <br><br>
+
+                            <button id="saveAdminPasswordBtn" class="activate-btn">
+                                <i class="fas fa-save"></i>
+                                Save Password
+                            </button>
+
+                            <button id="cancelAdminPasswordBtn" class="cancel-btn">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </button>
+
+                            <p id="adminPasswordMessage"></p>
+
+                        </div>
+                    </section>
+
+
                     <div class="dashboard-card">
-                        <h3>Recent Customer Registrations</h3>
-
+                        <h3>Backend Connection</h3>
+                        <p id="backendStatus">Checking connection...</p>
+                    </div>
+                </section>
+                <section id="customerSection" class="admin-section">
+                    <div class="dashboard-card">
+                        <h3>Customer Management</h3>
+                        <input type="text" id="customerSearch" placeholder="Search customers by name or email...">
+                        <select id="statusFilter">
+                            <option value="all">All Customers</option>
+                            <option value="active">Active Customers</option>
+                            <option value="inactive">Inactive Customers</option>
+                        </select>
+                        <button id="exportCustomersBtn" class="activate-btn">
+                            <i class="fas fa-file-excel"></i>
+                            Export Customers
+                        </button>
                         <div class="customer-table-wrapper">
-                            <table>
+
+                            <table class="customer-table">
                                 <thead>
                                     <tr>
-                                        <th>Customer Name</th>
-                                        <th>Email Address</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
                                         <th>Registration Date</th>
+                                        <th>Account Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="recentCustomersTable">
+                                <tbody id="customerTableBody">
                                     <tr>
-                                        <td colspan="3">Loading...</td>
+                                        <td colspan="3">Loading customers...</td>
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
+                </section>
+                <!-- ENQUIRY MANAGEMENT SECTION -->
 
-                </div>
+                <section id="enquirySection" class="admin-section">
 
-                <div class="dashboard-card">
-                    <h3>Admin Profile</h3>
+                    <div class="dashboard-card">
 
-                    <p>
-                        <strong>Name:</strong>
-                        <span id="adminName">Loading...</span>
-                    </p>
+                        <h3>Enquiry Management</h3>
 
-                    <p>
-                        <strong>Email:</strong>
-                        <span id="adminEmail">Loading...</span>
-                    </p>
-
-                    <p>
-                        <strong>Role:</strong>
-                        <span id="adminRole">Loading...</span>
-                    </p>
-
-                    <button id="editAdminProfileBtn" class="activate-btn">
-                        <i class="fas fa-user-edit"></i>
-                        Edit Profile
-                    </button>
-                    <button id="changeAdminPasswordBtn" class="activate-btn">
-                        <i class="fas fa-key"></i>
-                        Change Password
-                    </button>
-
-                    <p id="adminProfileMessage"></p>
-                </div>
-                <!-- EDIT ADMIN PROFILE FORM -->
-
-                <div class="dashboard-card" id="editAdminProfileForm" style="display: none;">
-
-                    <h3>Edit Admin Profile</h3>
-
-                    <label for="editAdminName">Admin Name</label>
-                    <input type="text" id="editAdminName" placeholder="Enter Admin Name">
-
-                    <br><br>
-
-                    <label for="editAdminEmail">Admin Email</label>
-                    <input type="email" id="editAdminEmail" placeholder="Enter Admin Email">
-
-                    <br><br>
-
-                    <button id="saveAdminProfileBtn" class="activate-btn">
-                        Save Changes
-                    </button>
-
-                    <button id="cancelAdminProfileBtn" class="cancel-btn">
-                        <i class="fas fa-times"></i>
-                        Cancel
-                    </button>
-
-                </div>
-
-                <!-- CHANGE ADMIN PASSWORD FORM -->
-                <div class="dashboard-card" id="changeAdminPasswordForm" style="display: none;">
-
-                    <h3>Change Admin Password</h3>
-
-                    <label for="currentAdminPassword">Current Password</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" id="currentAdminPassword" placeholder="Enter Current Password">
-                        <i class="fas fa-eye toggle-password"
-                            onclick="togglePassword('currentAdminPassword', this)"></i>
-                    </div>
-
-                    <br><br>
-
-                    <label for="newAdminPassword">New Password</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" id="newAdminPassword" placeholder="Enter New Password">
-                        <i class="fas fa-eye toggle-password" onclick="togglePassword('newAdminPassword', this)"></i>
-                    </div>
-
-                    <br><br>
-
-                    <label for="confirmAdminPassword">Confirm New Password</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" id="confirmAdminPassword" placeholder="Confirm New Password">
-                        <i class="fas fa-eye toggle-password"
-                            onclick="togglePassword('confirmAdminPassword', this)"></i>
-                    </div>
-
-                    <br><br>
-
-                    <button id="saveAdminPasswordBtn" class="activate-btn">
-                        <i class="fas fa-save"></i>
-                        Save Password
-                    </button>
-
-                    <button id="cancelAdminPasswordBtn" class="cancel-btn">
-                        <i class="fas fa-times"></i>
-                        Cancel
-                    </button>
-
-                    <p id="adminPasswordMessage"></p>
-
-                </div>
-
-
-                <div class="dashboard-card">
-                    <h3>Backend Connection</h3>
-                    <p id="backendStatus">Checking connection...</p>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Customer Management</h3>
-                    <input type="text" id="customerSearch" placeholder="Search customers by name or email...">
-                    <select id="statusFilter">
-                        <option value="all">All Customers</option>
-                        <option value="active">Active Customers</option>
-                        <option value="inactive">Inactive Customers</option>
-                    </select>
-                    <button id="exportCustomersBtn" class="activate-btn">
-                        <i class="fas fa-file-excel"></i>
-                        Export Customers
-                    </button>
-                    <div class="customer-table-wrapper">
-
-                        <table class="customer-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Registration Date</th>
-                                    <th>Account Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="customerTableBody">
-                                <tr>
-                                    <td colspan="3">Loading customers...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <p>Manage customer enquiries here.</p>
 
                     </div>
-                </div>
+
+                </section>
             </main>
 
             <a href="../index.html" class="back-link">Back to Website</a>

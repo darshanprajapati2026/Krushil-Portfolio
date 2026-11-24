@@ -525,3 +525,15 @@ button {
     width: 100%;
     box-sizing: border-box;
 }
+
+/* ==============================
+   ADMIN DASHBOARD SECTIONS
+============================== */
+
+.admin-section {
+    display: none;
+}
+
+.admin-section.active {
+    display: block;
+}

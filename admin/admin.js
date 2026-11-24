@@ -1086,6 +1086,40 @@ function togglePassword(inputId, icon) {
 }
 
 
+// SIDEBAR MENU NAVIGATION
+
+const sidebarLinks = document.querySelectorAll(".sidebar-link[data-section]");
+
+const adminSections = document.querySelectorAll(".admin-section");
+
+sidebarLinks.forEach(link => {
+
+    link.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        const targetSection = this.getAttribute("data-section");
+
+        // Hide all sections
+        adminSections.forEach(section => {
+            section.classList.remove("active");
+        });
+
+        // Show selected section
+        document.getElementById(targetSection).classList.add("active");
+
+        // Update active menu
+        sidebarLinks.forEach(item => {
+            item.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+    });
+
+});
+
+
 
 
 
